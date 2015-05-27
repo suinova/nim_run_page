@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Nim Language Testbed</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<style type="text/css" media="screen">
+			.main {
+				margin-top: 60px;
+			}
+			.r2 {
+				margin-top: 10px;
+			}
+			#editor {
+				padding: 5px;
+				width: 100%;
+				height: 600px;
+			}
+			#output {
+				width: 100%;
+				height: 600px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Nim Language Testbed</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container main">
+			<div class="row">
+				<div class="col-md-6">
+					<button class="btn btn-primary pull-right" id="run">Compile &amp; Run</button>
+				</div>
+				<div class="col-md-6">
+					
+				</div>
+			</div>
+			<div class="row r2">
+				<div class="col-md-6">
+					<div id="editor">echo "Hello World!"</div>
+				</div>
+				<div class="col-md-6">
+					<textarea id="output"></textarea>
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/theme-twilight.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/mode-python.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.setTheme("ace/theme/twilight");
+			editor.getSession().setMode("ace/mode/python");
+			
+			$(function(){
+				$('#run').click(function(){
+					var payload = {
+						source: editor.getValue()
+					};
+					$.post("/", payload, function(rs){
+						$('#output').val(rs);
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
